@@ -25,6 +25,7 @@ Route::group(['prefix' => 'user'] , function() {
     Route::post('update', 'UserController@update')->name('update');
     Route::get('getOne/{id}', 'UserController@getOne')->name('getOne');
     Route::get('delete/{id}', 'UserController@delete')->name('delete');
+    Route::post('login', 'UserController@login')->name('create');
 });
 
 // Photo Routes

@@ -6,6 +6,7 @@ use App\Http\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use Validator;
 use DB;
+use Auth;
 
 class UserController extends Controller
 {
@@ -44,6 +45,21 @@ class UserController extends Controller
         }
         catch(\Exception $e) {
             DB::rollback();
+            return $this->sendError($user=[], $e->getMessage());
+        }
+    }
+
+    public function login(Request $request)
+    {
+        try {
+            if (Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+                return $this->sendSuccess(Auth::user(), 'success');
+            }
+            else{
+                return $this->sendError($user=[], 'Invalid Email/Password');
+            }
+        }
+        catch(\Exception $e) {
             return $this->sendError($user=[], $e->getMessage());
         }
     }
